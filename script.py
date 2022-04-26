@@ -4,6 +4,7 @@ import numpy as np
 import flask
 import pickle
 from flask import Flask, render_template, request
+from pymango import MangoClient
 
 #creating instance of the class
 app=Flask(__name__)
@@ -35,8 +36,25 @@ def result():
             prediction='Income more than 50K'
         else:
             prediction='Income less that 50K'
+        
+        myclient = MongoClient("mongodb+srv://ajaysada:ajaysada@cluster0.pbbgq.mongodb.net/sample_airbnb?retryWrites=true&w=majority")
+  
+# database
+	db = myclient["sample_airbnb"]
+  
+# Created or Switched to collection
+# names: GeeksForGeeks
+	Collection = db["listingsAndReviews"]
+ 
+# Filtering the Quantities greater
+# than 40 using query.
+	cursor = Collection.find({"minimum_nights":"2"})
+ 
+	for record in cursor:
+    	     x=record['bedrooms'])
+    	     break
             
-        return render_template("result.html",prediction=prediction)
+        return render_template("result.html",prediction=x)
 
 if __name__ == "__main__":
 	app.run(debug=True,host="0.0.0.0")
