@@ -3,7 +3,7 @@ import numpy as np
 import flask
 import pickle
 from flask import Flask, render_template, request
-from pymango import MangoClient
+from pymongo import MongoClient
 
 #creating instance of the class
 app=Flask(__name__)
@@ -40,7 +40,8 @@ def result():
         Collection = db["listingsAndReviews"]
         cursor = Collection.find({"minimum_nights":"2"})
         for record in cursor:
-          	x = record['bedrooms']
+            x = record['bedrooms']
+            break
 
         return render_template("result.html",prediction=x)
       
