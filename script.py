@@ -35,12 +35,12 @@ def result():
             prediction='Income more than 50K'
         else:
             prediction='Income less that 50K'
-        myclient=MongoClient("mongodb+srv://ajaysada:ajaysada@cluster0.pbbgq.mongodb.net/sample_airbnb?retryWrites=true&w=majority")
-        db=myclient["sample_airbnb"]
-        Collection = db["listingsAndReviews"]
-        cursor = Collection.find({"minimum_nights":"2"})
+        myclient=MongoClient("mongodb://34.130.211.97:27017,34.130.180.139:27017,34.130.56.40:27017")
+        db=myclient["bda_yelp"]
+        Collection = db["yelprestaurants"]
+        cursor = Collection.find({"state":"TN"})
         for record in cursor:
-            x = record['bedrooms']
+            x = record['stars']
             break
 
         return render_template("result.html",prediction=x)
