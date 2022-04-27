@@ -13,3 +13,4 @@ ENTRYPOINT [ "python" ]
 ENV PORT 8080
 
 CMD [ "script.py" ]
+
