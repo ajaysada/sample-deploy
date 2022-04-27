@@ -1,9 +1,9 @@
-#importing libraries
 import os
 import numpy as np
 import flask
 import pickle
 from flask import Flask, render_template, request
+from pymongo import MongoClient
 
 #creating instance of the class
 app=Flask(__name__)
@@ -35,9 +35,15 @@ def result():
             prediction='Income more than 50K'
         else:
             prediction='Income less that 50K'
-            
-        return render_template("result.html",prediction=prediction)
+        myclient=MongoClient("mongodb://34.130.211.97:27017,34.130.180.139:27017,34.130.56.40:27017")
+        db=myclient["bda_yelp"]
+        Collection = db["yelprestaurants"]
+        cursor = Collection.find({"state":"TN"})
+        for record in cursor:
+            x = record['stars']
+            break
 
+        return render_template("result.html",prediction=x)
+      
 if __name__ == "__main__":
 	app.run(debug=True,host="0.0.0.0")
-	

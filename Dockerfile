@@ -1,12 +1,16 @@
 FROM python:3
 
-ENV PYTHONUNBUFFERED True
+COPY ./requirements.txt /app/requirements.txt
 
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . ./
+WORKDIR /app
 
 RUN pip install -r requirements.txt
-RUN pip install gunicorn
 
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 script:app
+COPY . /app
+
+ENTRYPOINT [ "python" ]
+
+ENV PORT 8080
+
+CMD [ "script.py" ]
+
